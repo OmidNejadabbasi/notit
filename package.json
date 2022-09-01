@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 2342",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
@@ -13,6 +13,7 @@
     "@tsconfig/svelte": "^3.0.0",
     "autoprefixer": "^10.4.7",
     "postcss": "^8.4.14",
+    "sass": "^1.54.8",
     "svelte": "^3.48.0",
     "svelte-check": "^2.7.2",
     "svelte-preprocess": "^4.10.7",
@@ -22,6 +23,10 @@
     "vite": "^2.9.12"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.1.1"
+    "@fortawesome/fontawesome-free": "^6.1.1",
+    "@fortawesome/free-brands-svg-icons": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "svelte-fa": "^3.0.3",
+    "node-sass": "^7.0.1"
   }
 }
