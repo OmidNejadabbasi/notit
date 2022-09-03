@@ -7,7 +7,7 @@
 
 <button
   style="--color:{color}; --hoverColor:{hoverColor}; --textColor:{textColor}; --borderColor:{borderColor}"
-  class="flex items-center gap-1 pointer-events-auto font-label font-semibold rounded-md py-1 px-2 text-[0.8125rem] leading-5 text-white"
+  class="flex items-center gap-1 pointer-events-auto font-label font-normal rounded-md py-1 px-2 text-[0.8125rem] leading-5 text-white"
 >
   <slot />
 </button>
