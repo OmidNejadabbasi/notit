@@ -4,6 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Segeoui";
+  src: url("fonts/segeoui.ttf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Segeoui";
+  src: url("fonts/segeouib.ttf");
+  font-weight: 600;
+}
+
 #app,
 html,
 body {

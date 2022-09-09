@@ -7,9 +7,9 @@
   } from "@fortawesome/free-solid-svg-icons";
 
   import Fa from "svelte-fa";
-  import Button from "../components/Button.svelte";
-  import NoteComponent from "../components/NoteComponent.svelte";
-  import { Color, CssColors } from "../data/Color";
+  import Button from "../../components/Button.svelte";
+  import NoteComponent from "../../components/NoteComponent.svelte";
+  import { Color, CssColors } from "../../data/Color";
 
   let c = Color.cssC("red");
   console.log(c.s());

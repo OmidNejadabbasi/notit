@@ -2,9 +2,9 @@
   import { faCalendarDay } from "@fortawesome/free-solid-svg-icons";
 
   import Fa from "svelte-fa";
-  import Button from "../components/Button.svelte";
-  import ListItem from "../components/ListItem.svelte";
-  import Space from "../components/Space.svelte";
+  import Button from "../../components/Button.svelte";
+  import ListItem from "../../components/ListItem.svelte";
+  import Space from "../../components/Space.svelte";
 </script>
 
 <div

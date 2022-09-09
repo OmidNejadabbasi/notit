@@ -3,7 +3,7 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{svelte,js,ts,jsx,tsx}"],
   theme: {
     fontFamily: {
-      label: ['"Roboto"', "ui-sans-serif", "system-ui"],
+      label: ['"Segoeui"', "ui-sans-serif", "system-ui"],
     },
     extend: {},
   },
