@@ -7,11 +7,33 @@
   import { ColorPalette } from "../../utils/ColorPalete";
   import Fa from "svelte-fa";
   import { faG } from "@fortawesome/free-solid-svg-icons";
+  import { SignUpService } from "./SignupService";
+  import { navigate } from "svelte-navigator";
+
+  let email;
+  let username;
+  let password;
+
+  async function onSignUp() {
+    console.log("on click");
+    let service = new SignUpService();
+    try {
+      const res = await service.signUp({ email, password, username });
+      console.log(res);
+      localStorage.setItem("jwtToken", res.accessToken);
+      navigate("/");
+    } catch (e) {
+      console.log(e);
+    }
+  }
 </script>
 
-<div class="flex items-center justify-center h-full gap-16">
+<div class="flex items-center justify-center h-full md:gap-12 lg:gap-24 p-6">
   <form action="" class="w-72 flex flex-col gap-3 ">
-    <Button borderColor={CssColors.black.withAlpha(0.5).s()}>
+    <Button
+      borderColor={CssColors.black.withAlpha(0.5).s()}
+      hoverColor={CssColors.black.withAlpha(0.2).s()}
+    >
       <svg
         enable-background="new 0 0 128 128"
         id="Social_Icons"
@@ -56,7 +78,10 @@
       >
       Sign in with google
     </Button>
-    <Button borderColor={CssColors.black.withAlpha(0.5).s()}>
+    <Button
+      borderColor={CssColors.black.withAlpha(0.5).s()}
+      hoverColor={CssColors.black.withAlpha(0.2).s()}
+    >
       <svg
         id="Layer_1"
         style="enable-background:new 0 0 512 512;"
@@ -78,18 +103,32 @@
       Sign in with google
     </Button>
     <hr class="my-3 bg-slate-300 h-[0.8px]" />
-    <TextField type="text" label="Email" placeholder="name@example.com" />
+    <TextField
+      type="text"
+      label="Email"
+      placeholder="name@example.com"
+      bind:value={email}
+    />
+
+    <TextField
+      type="text"
+      label="Password"
+      placeholder="Username"
+      bind:value={username}
+    />
 
     <TextField
       type="password"
       label="Password"
       placeholder="Enter yout password:"
+      bind:value={password}
     />
 
     <Button
       color={ColorPalette.primary.s()}
       textColor={CssColors.white.s()}
       hoverColor={ColorPalette.primaryDark.s()}
+      on:click={onSignUp}
     >
       <p class="font-semibold text-lg font-label text-center w-full">Sign Up</p>
     </Button>

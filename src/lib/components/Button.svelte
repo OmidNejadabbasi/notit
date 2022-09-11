@@ -3,10 +3,15 @@
   export let textColor = "#333";
   export let hoverColor = "#99f";
   export let borderColor = "transparent";
+  export let borderThickness = 1;
+
+  let borderWidth = borderThickness + "px";
 </script>
 
 <button
-  style="--color:{color}; --hoverColor:{hoverColor}; --textColor:{textColor}; --borderColor:{borderColor}"
+  on:click
+  type="button"
+  style="--color:{color}; --hoverColor:{hoverColor}; --textColor:{textColor}; --borderColor:{borderColor}; --borderWidth:{borderWidth}"
   class="flex items-center gap-1 pointer-events-auto font-label font-normal rounded-md py-1 px-2 text-[0.8125rem] leading-5 text-white duration-200"
 >
   <slot />
@@ -16,7 +21,7 @@
   button {
     color: var(--textColor);
     background-color: var(--color);
-    border: 2px solid var(--borderColor);
+    border: var(--borderWidth) solid var(--borderColor);
     &:hover {
       background-color: var(--hoverColor);
     }
