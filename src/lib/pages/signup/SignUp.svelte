@@ -5,10 +5,9 @@
 
   import TextField from "../../components/TextField.svelte";
   import { ColorPalette } from "../../utils/ColorPalete";
-  import Fa from "svelte-fa";
-  import { faG } from "@fortawesome/free-solid-svg-icons";
-  import { SignUpService } from "./SignupService";
+  import { AuthService } from "../../services/AuthService";
   import { navigate } from "svelte-navigator";
+  import { Constants } from "src/lib/config/config";
 
   let email;
   let username;
@@ -16,11 +15,11 @@
 
   async function onSignUp() {
     console.log("on click");
-    let service = new SignUpService();
+    let service = new AuthService();
     try {
       const res = await service.signUp({ email, password, username });
       console.log(res);
-      localStorage.setItem("jwtToken", res.accessToken);
+      localStorage.setItem(Constants.accessTokenKey, res.accessToken);
       navigate("/");
     } catch (e) {
       console.log(e);
