@@ -5,7 +5,15 @@ module.exports = {
     fontFamily: {
       label: ['"Segoeui"', "ui-sans-serif", "system-ui"],
     },
-    extend: {},
+
+    extend: {
+      backgroundImage: {
+        "diag-pattern": "url('/diag-pattern.webp')",
+      },
+      backgroundSize: {
+        "400p": "400px",
+      },
+    },
   },
   plugins: [],
 };

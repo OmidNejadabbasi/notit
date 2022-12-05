@@ -7,7 +7,7 @@
   import { ColorPalette } from "../../utils/ColorPalete";
   import { AuthService } from "../../services/AuthService";
   import { navigate } from "svelte-navigator";
-  import { Constants } from "src/lib/config/config";
+  import { Constants } from "../../config/config";
 
   let email;
   let username;

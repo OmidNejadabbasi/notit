@@ -10,9 +10,16 @@ export class AuthService {
     return res.data;
   }
 
+  async login(credentials: { username; password }) {
+    let logInURL = http.url("api/login");
+
+    const res = await http.post(logInURL, credentials);
+    return res.data;
+  }
+
   async currentUser(): Promise<User> {
     if (http.isStoredAccessToken()) {
-      const me = (await http.get("api/me").catch(() => null))?.data;
+      const me = (await http.get(http.url("api/me")).catch(() => null))?.data;
       return me;
     } else {
       return null;

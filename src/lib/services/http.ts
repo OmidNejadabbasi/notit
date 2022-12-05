@@ -21,7 +21,7 @@ export function isStoredAccessToken(): boolean {
 }
 
 export function url(path: string) {
-  return API_ROOT_URL + path;
+  return API_ROOT_URL + "/" + path;
 }
 
 export const get = axios.get;
