@@ -4,9 +4,9 @@
   import github from "../../../assets/img/github.svg";
   import google from "../../../assets/img/google.svg";
 
-  import Button from "../../components/Button.svelte";
+  import Button from "../../components/shared/Button.svelte";
 
-  import TextField from "../../components/TextField.svelte";
+  import TextField from "../../components/shared/TextField.svelte";
   import { ColorPalette } from "../../utils/ColorPalete";
   import { AuthService } from "../../services/AuthService";
   import { navigate } from "svelte-navigator";
@@ -79,7 +79,7 @@
       hoverColor={ColorPalette.primaryDark.s()}
       on:click={onLogin}
     >
-      <p class="font-semibold text-lg font-label text-center w-full">Sign Up</p>
+      <p class="font-semibold text-lg font-label text-center w-full">Login</p>
     </Button>
   </form>
   <img src="/banner.png" alt="site banner" class="w-96 md:block hidden" />

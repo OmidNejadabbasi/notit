@@ -7,7 +7,7 @@
   } from "@fortawesome/free-solid-svg-icons";
 
   import Fa from "svelte-fa";
-  import Button from "../../components/Button.svelte";
+  import Button from "../../components/shared/Button.svelte";
   import NoteComponent from "../../components/NoteComponent.svelte";
   import { Color, CssColors } from "../../data/Color";
 
@@ -49,6 +49,6 @@
   </div>
 
   <div class="flex flex-wrap gap-2 h-min w-full lg:mt-4 mt-3">
-    <NoteComponent />
+    <NoteComponent content="omid" />
   </div>
 </div>

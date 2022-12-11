@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from "../../components/Button.svelte";
+  import Button from "../../components/shared/Button.svelte";
   import { faHouse, faPerson, faUser } from "@fortawesome/free-solid-svg-icons";
   import Fa from "svelte-fa";
   import NavigationMenu from "./NavigationMenu.svelte";
@@ -8,7 +8,7 @@
   import { navigate } from "svelte-navigator";
   import { AuthService } from "../../services/AuthService";
   import type { User } from "../../data/User";
-  import Dialog from "../../components/Dialog.svelte";
+  import Dialog from "../../components/shared/Dialog.svelte";
   import { loop_guard } from "svelte/internal";
 
   let authService = new AuthService();
@@ -39,7 +39,6 @@
     class="relative ml-auto rounded-[50%] border p-1.5 aspect-square border-slate-800 bg-slate-50"
     on:click={(e) => (accountDropDownShowing = !accountDropDownShowing)}
   >
-    {@debug accountDropDownShowing}
     <Fa icon={faUser} color="#59ff" />
     <Dialog isShowing={accountDropDownShowing}>
       <div class="flex">

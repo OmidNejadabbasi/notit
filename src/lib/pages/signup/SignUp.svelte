@@ -1,9 +1,9 @@
 <script>
   import { CssColors } from "../../data/Color";
 
-  import Button from "../../components/Button.svelte";
+  import Button from "../../components/shared/Button.svelte";
 
-  import TextField from "../../components/TextField.svelte";
+  import TextField from "../../components/shared/TextField.svelte";
   import { ColorPalette } from "../../utils/ColorPalete";
   import { AuthService } from "../../services/AuthService";
   import { navigate } from "svelte-navigator";
