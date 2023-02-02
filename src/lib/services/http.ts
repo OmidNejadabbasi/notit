@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Injectable } from "container-ioc";
 import { API_ROOT_URL, Constants } from "../config/config";
 
 axios.interceptors.request.use(
@@ -16,12 +17,20 @@ axios.interceptors.request.use(
   }
 );
 
-export function isStoredAccessToken(): boolean {
-  return Boolean(localStorage.getItem(Constants.accessTokenKey));
-}
+export const tHttpModule = Symbol("http");
+@Injectable()
+export class HttpModule {
+  get = axios.get;
+  patch = axios.patch;
+  post = axios.post;
+  delet = axios.delete;
+  isStoredAccessToken(): boolean {
+    return Boolean(localStorage.getItem(Constants.accessTokenKey));
+  }
 
-export function url(path: string) {
-  return API_ROOT_URL + "/" + path;
+  url(path: string) {
+    return API_ROOT_URL + "/" + path;
+  }
 }
 
 export const get = axios.get;

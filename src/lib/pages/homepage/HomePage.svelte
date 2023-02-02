@@ -6,17 +6,18 @@
   import MainArea from "./MainArea.svelte";
   import { onMount } from "svelte";
   import { navigate } from "svelte-navigator";
-  import { AuthService } from "../../services/AuthService";
+  import { AuthService, tAuthService } from "../../services/AuthService";
   import type { User } from "../../data/User";
   import Dialog from "../../components/shared/Dialog.svelte";
-  import { loop_guard } from "svelte/internal";
+  import { sl } from "../../di";
 
-  let authService = new AuthService();
+  let authService: AuthService;
 
   let user: User = null;
   let accountDropDownShowing: boolean = false;
 
   onMount(async () => {
+    authService = sl.resolve(tAuthService);
     user = await authService.currentUser();
     console.log(user);
 

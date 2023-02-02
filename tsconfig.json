@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
+    "experimentalDecorators": true,
     "target": "esnext",
     "useDefineForClassFields": true,
     "module": "esnext",

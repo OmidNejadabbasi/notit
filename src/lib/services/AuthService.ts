@@ -1,28 +1,43 @@
 import { API_ROOT_URL, Constants } from "../config/config";
 import type { User } from "../data/User";
-import * as http from "./http";
+import { HttpModule, tHttpModule } from "./http";
+import { Inject, Injectable } from "container-ioc";
 
+export const tAuthService = Symbol("authService");
+@Injectable()
 export class AuthService {
-  async signUp(signupData: { username; email; password }) {
-    let signUpURL = http.url("api/signup");
+  user: User;
 
-    const res = await http.post(signUpURL, signupData);
+  constructor(@Inject(tHttpModule) private http: HttpModule) {
+    console.log("created from sl");
+  }
+
+  async signUp(signupData: { username; email; password }) {
+    let signUpURL = this.http.url("api/signup");
+
+    const res = await this.http.post(signUpURL, signupData);
     return res.data;
   }
 
   async login(credentials: { username; password }) {
-    let logInURL = http.url("api/login");
+    let logInURL = this.http.url("api/login");
 
-    const res = await http.post(logInURL, credentials);
+    const res = await this.http.post(logInURL, credentials);
     return res.data;
   }
 
   async currentUser(): Promise<User> {
-    if (http.isStoredAccessToken()) {
-      const me = (await http.get(http.url("api/me")).catch(() => null))?.data;
+    if (this.http.isStoredAccessToken() && !this.user) {
+      const me: User = (
+        await this.http.get(this.http.url("api/me")).catch(() => {
+          return null;
+        })
+      )?.data;
+      console.log(me);
+      this.user = me;
       return me;
     } else {
-      return null;
+      return this.user;
     }
   }
 }

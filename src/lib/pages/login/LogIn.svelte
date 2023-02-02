@@ -8,9 +8,10 @@
 
   import TextField from "../../components/shared/TextField.svelte";
   import { ColorPalette } from "../../utils/ColorPalete";
-  import { AuthService } from "../../services/AuthService";
+  import { AuthService, tAuthService } from "../../services/AuthService";
   import { navigate } from "svelte-navigator";
   import { Constants } from "../../config/config";
+  import { sl } from "../../di";
 
   let email;
   let username;
@@ -18,7 +19,7 @@
 
   async function onLogin() {
     console.log("on click");
-    let service = new AuthService();
+    let service = sl.resolve(tAuthService);
     try {
       const res = await service.login({
         username: username,
