@@ -20,7 +20,6 @@ export class NoteService {
         id: (await this.authService.currentUser()).id,
       },
     };
-    debugger;
 
     return this.http.post(this.http.url("api/notes"), newNote);
   }
