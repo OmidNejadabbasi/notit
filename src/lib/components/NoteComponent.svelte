@@ -21,9 +21,11 @@
 
       if (!note.id) {
         if (note.content.length === 0) return;
-        note = await noteService.saveNote(note);
+        note = (await noteService.saveNote(note)).data;
+        debugger;
       } else {
         // TODO update note when not new
+        noteService.updateNote(note);
       }
     });
   });
