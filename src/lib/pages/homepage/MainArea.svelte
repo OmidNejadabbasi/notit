@@ -10,9 +10,20 @@
   import Button from "../../components/shared/Button.svelte";
   import NoteComponent from "../../components/NoteComponent.svelte";
   import { Color, CssColors } from "../../data/Color";
+  import { onMount } from "svelte";
+  import type { Note } from "../../data/Note";
+  import { sl } from "../../di";
+  import { NoteService, tNoteService } from "../../services/note/NoteService";
 
   let c = Color.cssC("red");
   console.log(c.s());
+  let notes: Note[] = [];
+  let noteService: NoteService = sl.resolve(tNoteService);
+
+  onMount(async () => {
+    notes = (await noteService.fetchAllNotes()).data;
+    console.log("hello", notes);
+  });
 </script>
 
 <div
@@ -48,7 +59,10 @@
     </Button>
   </div>
 
-  <div class="flex flex-wrap gap-2 h-min w-full lg:mt-4 mt-3">
-    <NoteComponent content="omid" />
+  <div class="flex flex-col flex-wrap gap-2 h-min w-full lg:mt-4 mt-3">
+    <NoteComponent />
+    {#each notes as note}
+      <NoteComponent {note} />
+    {/each}
   </div>
 </div>

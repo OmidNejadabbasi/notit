@@ -3,6 +3,7 @@ import { AuthService, tAuthService } from "../AuthService";
 import type { Note } from "../../data/Note";
 import { HttpModule, tHttpModule } from "../http";
 import type { AxiosResponse } from "axios";
+import { retry } from "rxjs";
 
 export const tNoteService = Symbol("noteService");
 
@@ -27,5 +28,15 @@ export class NoteService {
   async updateNote(note: Note) {
     if (!note.id) throw new Error("Note does not have id ");
     return this.http.patch(this.http.url(`api/notes/${note.id}`), note);
+  }
+
+  async fetchAllNotes(): Promise<AxiosResponse<Note[], any>> {
+    let notesUrl = this.http.url("api/notes");
+    console.log(notesUrl);
+
+    let res = this.http.get(notesUrl);
+    console.log(await res);
+
+    return res;
   }
 }

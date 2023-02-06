@@ -33,7 +33,6 @@ export class AuthService {
           return null;
         })
       )?.data;
-      console.log(me);
       this.user = me;
       return me;
     } else {

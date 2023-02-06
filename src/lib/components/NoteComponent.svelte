@@ -23,7 +23,10 @@
 
   let noteService: NoteService = sl.resolve(tNoteService);
   export let note: Note = Note.newNote("", "");
-  let content;
+  let content = note.content;
+
+  console.log(content);
+  debugger;
 
   let contentSubject = new Subject<string>();
   let contentChanges: Observable<string> = contentSubject.pipe(
@@ -33,7 +36,6 @@
     if (note.id) formState = new FormSubmissionSucceed();
     contentChanges.subscribe(async (data) => {
       note.content = data;
-      console.log(data);
 
       try {
         if (!note.id) {
