@@ -4,6 +4,8 @@ export class Note extends Model {
   title?: string;
   content?: string;
   reviews?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
   private noteType: number = NoteType.Note;
 
   private constructor(

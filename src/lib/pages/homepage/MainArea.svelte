@@ -1,17 +1,12 @@
 <script lang="ts">
-  import {
-    faList,
-    faNoteSticky,
-    faPlus,
-    faStickyNote,
-  } from "@fortawesome/free-solid-svg-icons";
+  import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
   import Fa from "svelte-fa";
   import Button from "../../components/shared/Button.svelte";
   import NoteComponent from "../../components/NoteComponent.svelte";
   import { Color, CssColors } from "../../data/Color";
   import { onMount } from "svelte";
-  import type { Note } from "../../data/Note";
+  import { Note } from "../../data/Note";
   import { sl } from "../../di";
   import { NoteService, tNoteService } from "../../services/note/NoteService";
 
@@ -21,9 +16,14 @@
   let noteService: NoteService = sl.resolve(tNoteService);
 
   onMount(async () => {
-    notes = (await noteService.fetchAllNotes()).data;
-    console.log("hello", notes);
+    notes = await noteService.fetchAllNotes();
+    console.log(notes);
+    notes = notes.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   });
+
+  function addNote() {
+    notes = [Note.newNote("", ""), ...notes];
+  }
 </script>
 
 <div
@@ -35,6 +35,7 @@
       hoverColor={CssColors.crimson.withAlpha(0.5).s()}
       borderColor={CssColors.crimson.withAlpha(0.5).s()}
       textColor={CssColors.black.withAlpha(0.7).s()}
+      on:click={addNote}
     >
       <Fa icon={faPlus} color="crimson" />
       <p>Note</p>
@@ -60,8 +61,7 @@
   </div>
 
   <div class="flex flex-col flex-wrap gap-2 h-min w-full lg:mt-4 mt-3">
-    <NoteComponent />
-    {#each notes as note}
+    {#each notes as note (note)}
       <NoteComponent {note} />
     {/each}
   </div>

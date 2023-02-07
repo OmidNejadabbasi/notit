@@ -30,13 +30,14 @@ export class NoteService {
     return this.http.patch(this.http.url(`api/notes/${note.id}`), note);
   }
 
-  async fetchAllNotes(): Promise<AxiosResponse<Note[], any>> {
+  async fetchAllNotes(): Promise<Note[]> {
     let notesUrl = this.http.url("api/notes");
-    console.log(notesUrl);
 
-    let res = this.http.get(notesUrl);
-    console.log(await res);
-
-    return res;
+    let res = await this.http.get(notesUrl);
+    return (res.data as any[]).map((v) => ({
+      ...v,
+      createdAt: new Date(v.createdAt),
+      updatedAt: new Date(v.updatedAt),
+    }));
   }
 }

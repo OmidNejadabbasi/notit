@@ -4,7 +4,7 @@
     faExclamationCircle,
     faSpinner,
   } from "@fortawesome/free-solid-svg-icons";
-  import { debounceTime, fromEvent, map, Observable, Subject } from "rxjs";
+  import { debounceTime, Observable, Subject } from "rxjs";
   import { onMount } from "svelte";
   import Fa from "svelte-fa";
   import { Note } from "../data/Note";
@@ -24,9 +24,6 @@
   let noteService: NoteService = sl.resolve(tNoteService);
   export let note: Note = Note.newNote("", "");
   let content = note.content;
-
-  console.log(content);
-  debugger;
 
   let contentSubject = new Subject<string>();
   let contentChanges: Observable<string> = contentSubject.pipe(
@@ -59,9 +56,7 @@
   }
 </script>
 
-<div
-  class="rounded-md shadow-md lg:shadow-lg w-full border-2 p-2 max-w-xl relative"
->
+<div class="rounded-md shadow-md w-full border-2 p-2 max-w-xl relative">
   <div
     bind:innerHTML={content}
     contenteditable="true"
