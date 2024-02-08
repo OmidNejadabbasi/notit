@@ -3,7 +3,7 @@ import { Model } from "./Model";
 export class Note extends Model {
   title?: string;
   content?: string;
-  reviews?: number;
+  viewCount?: number;
   createdAt?: Date;
   updatedAt?: Date;
   private noteType: number = NoteType.Note;
@@ -17,7 +17,7 @@ export class Note extends Model {
     super();
     this.title = title;
     this.content = content;
-    this.reviews = reviews;
+    this.viewCount = reviews;
     this.noteType = noteType;
   }
   static newNote(title, content) {

@@ -22,6 +22,7 @@ export const tHttpModule = Symbol("http");
 export class HttpModule {
   get = axios.get;
   patch = axios.patch;
+  put = axios.put;
   post = axios.post;
   delet = axios.delete;
   isStoredAccessToken(): boolean {

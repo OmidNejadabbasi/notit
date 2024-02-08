@@ -13,14 +13,14 @@ export class AuthService {
   }
 
   async signUp(signupData: { username; email; password }) {
-    let signUpURL = this.http.url("api/signup");
+    let signUpURL = this.http.url("auth/signup");
 
     const res = await this.http.post(signUpURL, signupData);
     return res.data;
   }
 
   async login(credentials: { email; password }) {
-    let logInURL = this.http.url("api/login");
+    let logInURL = this.http.url("auth/login");
 
     const res = await this.http.post(logInURL, credentials);
     return res.data;
@@ -29,7 +29,7 @@ export class AuthService {
   async currentUser(): Promise<User> {
     if (this.http.isStoredAccessToken() && !this.user) {
       const me: User = (
-        await this.http.get(this.http.url("api/me")).catch(() => {
+        await this.http.get(this.http.url("auth/me")).catch(() => {
           return null;
         })
       )?.data;
