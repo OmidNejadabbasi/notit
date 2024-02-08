@@ -9,6 +9,7 @@
   import { Note } from "../../data/Note";
   import { sl } from "../../di";
   import { NoteService, tNoteService } from "../../services/note/NoteService";
+  import { daysSinceEpoch } from "../../utils/dateUtils";
 
   let c = Color.cssC("red");
   console.log(c.s());
@@ -20,6 +21,19 @@
     console.log(notes);
     notes = notes.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   });
+
+  notes = notes.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  let notesDailyListed = new Map<Date, Note[]>();
+  let dayCount = 0;
+  let date = new Date();
+  for (let i = 0; i < notes.length; i++) {
+    if (daysSinceEpoch(notes[i].createdAt) === daysSinceEpoch(date)) {
+      notesDailyListed.set(date).push(notes[i]);
+    } else {
+      dayCount++;
+      notesDailyListed.push([]);
+    }
+  }
 
   function addNote() {
     notes = [Note.newNote("", ""), ...notes];

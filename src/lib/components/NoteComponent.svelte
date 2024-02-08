@@ -56,7 +56,10 @@
   }
 </script>
 
-<div class="rounded-md shadow-md w-full border-2 p-2 max-w-xl relative">
+<div
+  class="rounded-md shadow-md w-full border-[1px] hover:border-2 hover:border-gray-400 focus-within:border-2
+   focus-within:border-gray-400 transition-all outline-none p-2 max-w-xl relative"
+>
   <div
     bind:innerHTML={content}
     contenteditable="true"

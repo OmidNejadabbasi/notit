@@ -19,7 +19,6 @@
   onMount(async () => {
     authService = sl.resolve(tAuthService);
     user = await authService.currentUser();
-    console.log(user);
 
     checkIfUserLoggedIn();
   });
