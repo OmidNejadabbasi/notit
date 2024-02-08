@@ -13,8 +13,8 @@
   import { Constants } from "../../config/config";
   import { sl } from "../../di";
 
+  // let email;
   let email;
-  let username;
   let password;
 
   async function onLogin() {
@@ -22,7 +22,7 @@
     let service = sl.resolve(tAuthService);
     try {
       const res = await service.login({
-        username: username,
+        email,
         password,
       });
       console.log(res);
@@ -53,18 +53,12 @@
       Sign in with GitHub
     </Button>
     <hr class="my-3 bg-slate-300 h-[0.8px]" />
-    <TextField
-      type="text"
-      label="Email"
-      placeholder="name@example.com"
-      bind:value={email}
-    />
 
     <TextField
       type="text"
       label="Username"
       placeholder="Username"
-      bind:value={username}
+      bind:value={email}
     />
 
     <TextField

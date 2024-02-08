@@ -11,14 +11,13 @@
   import { sl } from "../../di";
 
   let email;
-  let username;
   let password;
 
   async function onSignUp() {
     console.log("on click");
     let service = sl.resolve(tAuthService);
     try {
-      const res = await service.signUp({ email, password, username });
+      const res = await service.signUp({ email, password });
       console.log(res);
       localStorage.setItem(Constants.accessTokenKey, res.accessToken);
       navigate("/");
@@ -109,14 +108,6 @@
       placeholder="name@example.com"
       bind:value={email}
     />
-
-    <TextField
-      type="text"
-      label="Password"
-      placeholder="Username"
-      bind:value={username}
-    />
-
     <TextField
       type="password"
       label="Password"

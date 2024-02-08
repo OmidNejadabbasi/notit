@@ -19,7 +19,7 @@ export class AuthService {
     return res.data;
   }
 
-  async login(credentials: { username; password }) {
+  async login(credentials: { email; password }) {
     let logInURL = this.http.url("api/login");
 
     const res = await this.http.post(logInURL, credentials);
