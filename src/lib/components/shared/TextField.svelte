@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
   type textInputType = "text" | "email" | "password" | "tel" | "url";
   export let type: textInputType = "text";
   export let value: string = "";

@@ -10,6 +10,7 @@ export default defineConfig({
   plugins: [
     svelte({
       /* plugin options */
+      compilerOptions: { dev: true },
     }),
   ],
   server: {

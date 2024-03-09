@@ -5,9 +5,11 @@ import { Container } from "container-ioc";
 import { LifeTime } from "container-ioc/dist/lib/interfaces";
 import { AuthService, tAuthService } from "./lib/services/AuthService";
 import { NoteService, tNoteService } from "./lib/services/note/NoteService";
+import { mount } from "svelte";
+import { gsap } from "gsap/dist/gsap";
+import { Flip } from "gsap/dist/Flip";
 
-const app = new App({
-  target: document.getElementById("app"),
-});
+gsap.registerPlugin(Flip);
 
+const app = mount(App, { target: document.getElementById("app") });
 export default app;
