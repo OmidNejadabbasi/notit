@@ -5,7 +5,7 @@
     faSpinner,
   } from "@fortawesome/free-solid-svg-icons";
   import { debounceTime, Observable, Subject } from "rxjs";
-  import { onMount } from "svelte";
+  import { onMount, untrack } from "svelte";
   import Fa from "svelte-fa";
   import { Note, NoteType } from "../data/Note";
   import { sl } from "../di";
@@ -20,6 +20,8 @@
   } from "../state/FormState";
   import { scaleHeight } from "../utils/animations";
   import { cssVariables } from "../utils/svelte-utils";
+  import Flip from "gsap/dist/Flip";
+  import { fade } from "svelte/transition";
 
   let formState: FormState = $state(new FormNewMode());
 
@@ -55,67 +57,49 @@
         formState = new FormSubmissionFailed(err.message);
       }
     });
+    height = `${element.clientHeight}px`;
   });
-  let modalClass = $state("");
+  let isModal = $state(false);
   $effect(() => {
-    let first = element.getBoundingClientRect();
-    console.log(first);
+    const prev = Flip.getState(element, {});
+    console.log(prev);
+    isFocused;
+    untrack(() => (isModal = isFocused));
 
-    isFocused ?element.classList.add("modal"):element.classList.remove("modal")
-    element.offsetTop;
-
-    let last = element.getBoundingClientRect();
-
-    console.log(last);
-    const deltaX = first.left - last.left;
-    const deltaY = first.top - last.top;
-    const deltaW = first.width / last.width;
-    const deltaH = first.height / last.height;
-
-    element.animate(
-      [
-        {
-          transformOrigin: "top left",
-          transform: `
-    translate(${deltaX}px, ${deltaY}px)
-    scale(${deltaW}, ${deltaH})
-  `,
-        },
-        {
-          transformOrigin: "top left",
-          transform: "none",
-        },
-      ],
-      {
-        duration: 300,
-        easing: "ease-in-out",
-        fill: "both",
-      }
-    );
+    requestAnimationFrame(() => {
+      Flip.from(prev, { duration: 0.4, ease: "power1.inOut" });
+    });
   });
 
   $effect(() => {
     contentSubject.next({ content, title });
     formState = new FormDirty();
+    height = `${element.clientHeight}px`;
   });
 </script>
 
 <div
   bind:this={fakeElement}
-  style="display: {isFocused
+  style="display: {isModal
     ? 'block'
     : 'none'}; min-height:{height}; width:{width}"
+  class="float-left"
 ></div>
 {#if isFocused}
-  <div class="overlay" on:click={() => (isFocused = false)}></div>
+  <div
+    class="overlay"
+    on:click={() => (isFocused = false)}
+    transition:fade
+  ></div>
 {:else}{/if}
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   on:click={() => (isFocused = true)}
-  class="card"
+  class="{isModal ? 'modal' : ''} card"
   on:keydown={() => {}}
   bind:this={element}
+  id="elem"
   use:cssVariables={{ height, width }}
 >
   {#if hasTitle || isFocused}
@@ -150,24 +134,34 @@
 
 <style lang="scss">
   .input {
-    @apply outline-none font-semibold text-lg;
+    @apply outline-none font-semibold text-lg flex-none;
   }
   .content {
-    @apply border-none outline-none min-h-[46px] w-full text-gray-900;
+    @apply border-none outline-none min-h-[46px] w-full text-gray-900 flex-1;
+    text-overflow: inherit;
+    overflow: inherit;
+    white-space: inherit;
   }
   .card {
-    @apply rounded-md shadow-md w-full border-[1px] outline-none p-2 max-w-xl relative hover:border-2 hover:border-gray-400 focus-within:border-2
-   focus-within:border-gray-400;
+    @apply rounded-md shadow-md w-full border-[1px] outline-none p-2 max-w-xl hover:border-2 hover:border-gray-400 focus-within:border-2
+   focus-within:border-gray-400 max-h-40 flex flex-col;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .modal {
     position: fixed;
-    max-height: 80%;
-    width: 750px;
+    max-height: 80% !important;
+    width: 750px !important;
     background-color: white;
-    left: calc(50vw - var(--width) / 2);
+    // left: calc(50vw - var(--width) / 2);
+    left: 50px;
     top: max(10%, 15vh - var(--height) / 2);
     z-index: 20;
+    text-overflow: unset !important;
+    overflow-y: auto !important;
+    white-space: unset !important;
   }
 
   .overlay {
@@ -177,7 +171,7 @@
     width: 100vw;
     height: 100vh;
     background-color: #202124;
-    opacity: 0.3;
+    opacity: 0.42;
     z-index: 10;
   }
 </style>
