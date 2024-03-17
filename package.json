@@ -23,6 +23,10 @@
     "vite": "^5.1.5"
   },
   "dependencies": {
+    "@editorjs/code": "^2.9.0",
+    "@editorjs/editorjs": "^2.29.0",
+    "@editorjs/header": "^2.8.1",
+    "@editorjs/list": "^1.9.0",
     "@fortawesome/fontawesome-free": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
@@ -30,6 +34,7 @@
     "container-ioc": "^1.7.19",
     "gsap": "^3.12.5",
     "rxjs": "^7.8.1",
+    "sveditorjs": "^2.0.1",
     "svelte-fa": "^4.0.2",
     "svelte-navigator": "^3.2.2"
   }
