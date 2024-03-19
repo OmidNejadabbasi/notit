@@ -39,7 +39,7 @@
   let title = $state(note.title);
   let hasTitle = $derived(title?.length);
   let isFocused = $state(false);
-  let element: HTMLDivElement;
+  let element: HTMLDivElement = $state();
   let fakeElement: HTMLDivElement;
   let height = $state("");
   let width = $state("");
@@ -87,14 +87,8 @@
   });
   let isModal = $state(false);
   $effect(() => {
-    const prev = Flip.getState(element, {});
-    console.log(prev);
     isFocused;
     untrack(() => (isModal = isFocused));
-
-    requestAnimationFrame(() => {
-      Flip.from(prev, { duration: 0.4, ease: "power1.inOut" });
-    });
   });
   $effect(() => {
     contentSubject.next({ content, title });
@@ -124,7 +118,7 @@
     <h3 class="text-gray-400">Empty Note</h3>
   {/if}
 </div>
-<Dialog bind:isShowing={isFocused}>
+<Dialog bind:isOpen={isFocused} {element}>
   {#if hasTitle || isFocused}
     <!-- content here -->
     <input
@@ -135,7 +129,7 @@
     />
   {/if}
   <div
-  class:hidden={!isFocused}
+    class:hidden={!isFocused}
     use:editor={{
       onChange: (ev) => {
         updateData();

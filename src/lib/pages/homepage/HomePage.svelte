@@ -40,15 +40,6 @@
     on:click={(e) => (accountDropDownShowing = !accountDropDownShowing)}
   >
     <Fa icon={faUser} color="#59ff" />
-    <Dialog isShowing={accountDropDownShowing}>
-      <div class="flex">
-        <img src="" alt="" />
-        <div>
-          <p>joh</p>
-          <p>noijhlhuh@gmail.com</p>
-        </div>
-      </div>
-    </Dialog>
   </div>
 </div>
 
