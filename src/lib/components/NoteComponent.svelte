@@ -92,11 +92,10 @@
   id="elem"
 >
   {#if hasTitle}
-    <!-- content here -->
     <h3 class="input">{title}</h3>
   {/if}
-  <div class="">
-    {preview?.substring(0, 300) + (preview?.length || 0 >= 300 ? "..." : "")}
+  <div class="overflow-ellipsis text-wrap">
+    {@html preview?.substring(0, 300) + (preview?.length || 0 >= 300 ? "..." : "")}
   </div>
   {#if preview?.trim().length === 0}
     <h3 class="text-gray-400">Empty Note</h3>
@@ -146,7 +145,7 @@
   }
   .card {
     @apply rounded-md shadow-md w-full border-[1px] outline-none p-2 max-w-xl hover:border-2 hover:border-gray-400 focus-within:border-2
-   focus-within:border-gray-400 max-h-40 flex flex-col;
+   focus-within:border-gray-400 max-h-72 flex flex-col;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
