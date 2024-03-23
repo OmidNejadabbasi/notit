@@ -1,7 +1,5 @@
-import type EditorJS from "@editorjs/editorjs";
+import EditorJS from "@editorjs/editorjs";
 import type { EditorConfig, OutputData } from "@editorjs/editorjs";
-import { writable } from "svelte/store";
-import type { Readable, Writable } from "svelte/store";
 import CodeTool from "@editorjs/code";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
@@ -19,12 +17,12 @@ export type EditorStoreAction = ((
 ) => {
   destroy?: () => void;
 }) &
-  Readable<EditorStore>;
+  EditorStore;
 
 export type EditorResponse = {
-  editor: EditorStoreAction;
-  isReady: Readable<boolean>;
-  data: Writable<OutputData>;
+  use: EditorStoreAction;
+  get isReady(): boolean;
+  get data(): OutputData;
 };
 
 export type SvelteEditorConfig = Omit<EditorConfig, "holder" | "holderId">;
@@ -36,72 +34,57 @@ export function createEditor(
     time: new Date().getTime(),
     blocks: [],
   };
-  let editorInstance: EditorJS | undefined;
-  const { subscribe: subscribeEditor, set: setEditor } = writable<EditorStore>(
-    {}
-  );
-  const { subscribe: subscribeIsReady, set: setIsReady } =
-    writable<boolean>(false);
-  const {
-    subscribe: subscribeData,
-    set: setData,
-    update: updateData,
-  } = writable<OutputData>(initialData);
+  let editorInstance: EditorJS | undefined = $state(undefined);
+  let editor: EditorStore = {};
+  let isReady = $state(false);
+  let data: OutputData = $state(initialData);
 
-  let newSetData = (data: OutputData) => {
-    updateData((oldData) => ({ ...oldData, ...data }));
-    editorInstance?.render(data);
-  };
-
-  function editor(
-    node: HTMLElement,
-    parameters: SvelteEditorConfig = {
-      tools: {
-        header: Header,
-        list: List,
-        code: CodeTool,
-      },
-    }
-  ) {
+  function getEditor(node: HTMLElement, parameters: SvelteEditorConfig = {}) {
     async function setup() {
       if (typeof window === "undefined") return;
-      const Editor = await import("@editorjs/editorjs");
-      const instance = new Editor.default({
+      const instance = new EditorJS({
         ...configuration,
         ...parameters,
+        tools: {
+          header: Header,
+          list: List,
+          code: CodeTool,
+        },
         holder: node,
+        onChange: async () => {
+          data = await instance.save();
+        },
       });
-
       instance.isReady
         .then(() => {
           editorInstance = instance;
-          if (parameters.data) setData(parameters.data);
+          if (parameters.data) data = parameters.data;
 
           const save = async () => {
-            const data = await instance.save();
-            setData(data);
+            const d = await instance.save();
+            data = d;
           };
 
           const clear = async () => {
             instance.clear();
-            updateData((data) => ({
+            data = {
               ...data,
               time: new Date().getTime(),
               blocks: [],
-            }));
+            };
           };
 
           const render = async (data: OutputData) => {
             instance.render(data);
           };
 
-          setEditor({
+          editor = {
             instance,
             save,
             render,
             clear,
-          });
-          setIsReady(true);
+          };
+          isReady = true;
         })
         .catch(console.error);
     }
@@ -112,12 +95,19 @@ export function createEditor(
       },
     };
   }
+  let ed: EditorStoreAction = getEditor;
 
-  editor.subscribe = subscribeEditor;
-
+  ed.instance = editorInstance;
+  ed.save = editor.save;
+  ed.render = editor.render;
+  ed.clear = editor.clear;
   return {
-    editor,
-    isReady: { subscribe: subscribeIsReady },
-    data: { subscribe: subscribeData, set: newSetData, update: updateData },
+    use: ed,
+    get isReady() {
+      return isReady;
+    },
+    get data() {
+      return data;
+    },
   };
 }

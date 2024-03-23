@@ -4,6 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
+h1 {
+  @apply text-2xl font-semibold;
+}
+h2 {
+  @apply text-xl font-semibold;
+}
+
 @font-face {
   font-family: "Segeoui";
   src: url("fonts/segeoui.ttf");
@@ -26,6 +33,14 @@ body {
     max-width: calc(100% - 120px) !important;
     margin: 0 60px;
   }
+}
+.codex-editor--narrow .ce-toolbar__actions {
+  right: 100%;
+}
+
+.codex-editor--narrow .ce-toolbox .ce-popover,
+.codex-editor--narrow .ce-settings .ce-popover {
+  left: 0;
 }
 
 .cdx-block {

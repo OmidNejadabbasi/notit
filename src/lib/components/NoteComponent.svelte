@@ -18,31 +18,30 @@
     FormSubmissionSucceed,
     FormSubmitted,
   } from "../state/FormState";
-  import { scaleHeight } from "../utils/animations";
   import { cssVariables } from "../utils/svelte-utils";
-  import Flip from "gsap/dist/Flip";
-  import { fade } from "svelte/transition";
-  import { createEditor, type EditorStore } from "../utils/editorjs.svelte";
+  import {
+    createEditor,
+    type EditorStore,
+  } from "../utils/editorjs/editorjs.svelte";
   import Dialog from "./shared/Dialog.svelte";
 
-  const { editor, isReady, data } = createEditor({ placeholder: "Empty Note" });
   const dispatcher = createEventDispatcher();
 
   let formState: FormState = $state(new FormNewMode());
 
   let noteService: NoteService = sl.resolve(tNoteService);
   let { note = Note.newNote("", "") } = $props<{ note: Note }>();
-  let content = $state(JSON.parse(note.content || "[]"));
-  isReady.subscribe((is) => {
-    if (is) data.set(content);
+  let content:any[] = $state(JSON.parse(note.content || "[]"));
+  let editor = createEditor({
+    placeholder: "Empty Note",
+    data: { blocks: content },
   });
   let title = $state(note.title);
+  let preview = $derived(content.slice(0,3).map((e)=>{
+    return e.data.text || e.data.code
+  }).join('\n'))
   let hasTitle = $derived(title?.length);
   let isFocused = $state(false);
-  let element: HTMLDivElement = $state();
-  let fakeElement: HTMLDivElement;
-  let height = $state("");
-  let width = $state("");
 
   let contentSubject = new Subject<any>();
   let contentChanges: Observable<any> = contentSubject.pipe(debounceTime(3000));
@@ -65,25 +64,13 @@
         formState = new FormSubmissionFailed(err.message);
       }
     });
-    height = `${element.clientHeight}px`;
   });
 
   function focusNote() {
     isFocused = true;
   }
-  function unfocusNote() {
-    isFocused = false;
-  }
-
-  let _e: EditorStore;
-  editor.subscribe((e) => {
-    _e = e;
-  });
-  function updateData() {
-    _e.save && _e.save();
-  }
-  data.subscribe((d) => {
-    content = d.blocks;
+  $effect(() => {
+    content = editor.data?.blocks;
   });
   let isModal = $state(false);
   $effect(() => {
@@ -93,7 +80,6 @@
   $effect(() => {
     contentSubject.next({ content, title });
     formState = new FormDirty();
-    height = `${element.clientHeight}px`;
   });
 </script>
 
@@ -103,22 +89,20 @@
   on:focusin={focusNote}
   class="{isModal ? 'opacity-0' : ''} card transition-all duration-200"
   on:keydown={() => {}}
-  bind:this={element}
   id="elem"
-  use:cssVariables={{ height, width }}
 >
   {#if hasTitle}
     <!-- content here -->
     <h3 class="input">{title}</h3>
   {/if}
   <div class="">
-    {title?.substring(0, 300) + (title?.length || 0 >= 300 ? "..." : "")}
+    {preview?.substring(0, 300) + (preview?.length || 0 >= 300 ? "..." : "")}
   </div>
-  {#if title?.length === 0}
+  {#if preview?.trim().length === 0}
     <h3 class="text-gray-400">Empty Note</h3>
   {/if}
 </div>
-<Dialog bind:isOpen={isFocused} {element}>
+<Dialog bind:isOpen={isFocused}>
   {#if hasTitle || isFocused}
     <!-- content here -->
     <input
@@ -128,16 +112,7 @@
       placeholder="Title"
     />
   {/if}
-  <div
-    class:hidden={!isFocused}
-    use:editor={{
-      onChange: (ev) => {
-        updateData();
-      },
-    }}
-    class="content"
-    dir="ltr"
-  ></div>
+  <div class:hidden={!isFocused} use:editor.use class="content" dir="ltr"></div>
   <div class="absolute bottom-2 right-2">
     {#if formState instanceof FormSubmissionSucceed}
       <Fa icon={faCircleCheck} color="limegreen" />
@@ -166,7 +141,7 @@
     overflow: inherit;
     white-space: inherit;
     scrollbar-width: thin;
-    min-width: 720px;
+    min-width: 980px;
     max-width: 90vw;
   }
   .card {
