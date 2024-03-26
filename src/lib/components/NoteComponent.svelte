@@ -144,7 +144,7 @@
     max-width: 90vw;
   }
   .card {
-    @apply rounded-md shadow-md w-full border-[1px] outline-none p-2 max-w-xl hover:border-2 hover:border-gray-400 focus-within:border-2
+    @apply rounded-md shadow-md w-full border-[1px] outline-none p-3 max-w-xl hover:border-2 hover:border-gray-400 focus-within:border-2
    focus-within:border-gray-400 max-h-72 flex flex-col;
     text-overflow: ellipsis;
     overflow: hidden;

@@ -1,8 +1,9 @@
 import EditorJS from "@editorjs/editorjs";
 import type { EditorConfig, OutputData } from "@editorjs/editorjs";
-import CodeTool from "@editorjs/code";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
+import CodeBox from "@bomdi/codebox";
+import editorjsCodecup from '@calumk/editorjs-codecup';
 
 export type EditorStore = {
   instance?: EditorJS;
@@ -48,7 +49,7 @@ export function createEditor(
         tools: {
           header: Header,
           list: List,
-          code: CodeTool,
+          code: editorjsCodecup,
         },
         holder: node,
         onChange: async () => {

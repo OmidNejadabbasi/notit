@@ -27,6 +27,9 @@ html,
 body {
   height: 100%;
 }
+div{
+  padding: 0;
+}
 @media (min-width: 651px) {
   .ce-block__content,
   .ce-toolbar__content {

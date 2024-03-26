@@ -35,16 +35,11 @@
     <Fa icon={faHouse} />
   </Button>
 
-  <div
-    class="relative ml-auto rounded-[50%] border p-1.5 aspect-square border-slate-800 bg-slate-50"
-    on:click={(e) => (accountDropDownShowing = !accountDropDownShowing)}
-  >
-    <Fa icon={faUser} color="#59ff" />
-  </div>
+  <Fa icon={faUser} color="#59ff" />
 </div>
 
 <main class="flex min-h-full">
-  <div class="flex-grow-0 w-72">
+  <div class="flex-grow-0 w-96">
     <NavigationMenu />
   </div>
 
