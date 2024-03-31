@@ -4,6 +4,7 @@ import type { Note } from "../../data/Note";
 import { HttpModule, tHttpModule } from "../http";
 import type { AxiosResponse } from "axios";
 import { retry } from "rxjs";
+import type { Tag } from "src/lib/data/Tag";
 
 export const tNoteService = Symbol("noteService");
 
@@ -36,5 +37,11 @@ export class NoteService {
       createdAt: new Date(v.createdAt),
       updatedAt: new Date(v.updatedAt),
     }));
+  }
+  async fetchAllTags(): Promise<Tag[]>{
+    let tagsUrl = this.http.url("tags");
+
+    let res = await this.http.get(tagsUrl);
+    return (res.data as Tag[])
   }
 }

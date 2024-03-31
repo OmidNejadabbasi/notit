@@ -10,8 +10,19 @@
   import type { User } from "../../data/User";
   import Dialog from "../../components/shared/Dialog.svelte";
   import { sl } from "../../di";
+  import {
+    tNoteService,
+    type NoteService,
+  } from "../../services/note/NoteService";
+  import type { Tag } from "../../data/Tag";
 
   let authService: AuthService;
+  let noteService: NoteService = sl.resolve(tNoteService);
+  let tags: Tag[] = [];
+
+  noteService.fetchAllTags().then((data) => {
+    tags = data;
+  });
 
   let user: User = null;
   let accountDropDownShowing: boolean = false;
@@ -40,7 +51,7 @@
 
 <main class="flex min-h-full">
   <div class="flex-grow-0 w-96">
-    <NavigationMenu />
+    <NavigationMenu {tags} />
   </div>
 
   <MainArea />

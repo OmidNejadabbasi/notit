@@ -6,8 +6,11 @@
   import ListItem from "../../components/ListItem.svelte";
   import Space from "../../components/shared/Space.svelte";
   import Collapsible from "../../components/shared/Collapsible.svelte";
+  import type { Tag } from "../../data/Tag";
+  import TagItem from "../../components/TagItem.svelte";
 
-  let isTagsOpen= false;
+  let { tags } = $props<{tags: Tag[]}>();
+  let isTagsOpen= $state(false);
 </script>
 
 <div
@@ -29,10 +32,6 @@
     <p class="flex-grow-1">Today</p>
   </ListItem>
   <Collapsible bind:isOpen={isTagsOpen}>
-    <ul class="pl-3">
-      <li>Hello </li>
-      <li>good bye!</li>
-    </ul>
     {#snippet header()}
     <div class="flex items-center gap-2">
       <Fa icon={faTags} size="xs"/> <span> Tags</span>
@@ -40,5 +39,11 @@
        class="ml-auto mr-3 transition-all {isTagsOpen && '-rotate-90'}" />
     </div>
     {/snippet}
+    <ul class="pl-3 pr-2">
+      <div class="h-1"></div>
+      {#each tags as t}
+      <TagItem tag={t}></TagItem>
+      {/each}
+    </ul>
   </Collapsible>
 </div>

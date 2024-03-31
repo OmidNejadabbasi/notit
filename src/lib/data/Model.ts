@@ -1,5 +1,4 @@
 export class Model {
-  userid: UserId;
   id: string;
 }
 
