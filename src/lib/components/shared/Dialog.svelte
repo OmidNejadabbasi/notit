@@ -44,7 +44,8 @@
     @apply rounded-md p-3 bg-white;
     position: absolute;
     left: calc(50vw - var(--widthVar) / 2);
-    top: 100px;
+    top: 50vh;
+    transform: translate(0, -50%);
     max-height: 80%;
     z-index: 20;
     display: none;

@@ -1,6 +1,6 @@
 <script lang="ts">
   import Button from "../../components/shared/Button.svelte";
-  import { faHouse, faPerson, faUser } from "@fortawesome/free-solid-svg-icons";
+  import { faHouse, faUser } from "@fortawesome/free-solid-svg-icons";
   import Fa from "svelte-fa";
   import NavigationMenu from "./NavigationMenu.svelte";
   import MainArea from "./MainArea.svelte";
@@ -8,7 +8,6 @@
   import { navigate } from "svelte-navigator";
   import { AuthService, tAuthService } from "../../services/AuthService";
   import type { User } from "../../data/User";
-  import Dialog from "../../components/shared/Dialog.svelte";
   import { sl } from "../../di";
   import {
     tNoteService,
@@ -18,7 +17,7 @@
 
   let authService: AuthService;
   let noteService: NoteService = sl.resolve(tNoteService);
-  let tags: Tag[] = [];
+  let tags: Tag[] = $state([])
 
   noteService.fetchAllTags().then((data) => {
     tags = data;

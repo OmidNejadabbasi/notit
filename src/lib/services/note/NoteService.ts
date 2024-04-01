@@ -38,10 +38,15 @@ export class NoteService {
       updatedAt: new Date(v.updatedAt),
     }));
   }
-  async fetchAllTags(): Promise<Tag[]>{
+  async fetchAllTags(): Promise<Tag[]> {
     let tagsUrl = this.http.url("tags");
 
     let res = await this.http.get(tagsUrl);
-    return (res.data as Tag[])
+    return res.data as Tag[];
+  }
+  async createTag(tagName: string) {
+    let tagsUrl = this.http.url("tags");
+    let res = await this.http.post(tagsUrl, { name: tagName });
+    return res.data as Tag;
   }
 }

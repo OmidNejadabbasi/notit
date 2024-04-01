@@ -16,7 +16,7 @@
     initial-value: #e2e2e2;
   }
   .tag {
-    @apply px-3 py-[1px] mb-1 rounded-xl hover:rounded-lg bg-slate-300 transition-all font-semibold;
+    @apply px-4 py-[2px] mb-1 rounded-xl hover:rounded-lg bg-slate-300 transition-all font-semibold;
     background-color: var(--color);
     color: #3f3f3f;
   }
