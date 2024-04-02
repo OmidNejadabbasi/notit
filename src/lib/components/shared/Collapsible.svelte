@@ -1,11 +1,11 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
 
-  let { isOpen=false, header, children } = $props<{
+  let { isOpen=$bindable(false), header, children }:{
     isOpen?: boolean;
     header;
     children;
-  }>();
+  } = $props();
   
 </script>
 

@@ -13,7 +13,7 @@
 
   let noteService: NoteService = sl.resolve(tNoteService);
   
-  let { tags } = $props<{tags: Tag[]}>();
+  let { tags }:{tags: Tag[]} = $props();
   let isTagsOpen= $state(true);
   let isAddTagDialogOpen = $state(false);
   let tagName = $state("")
@@ -55,16 +55,21 @@
        class="ml-auto mr-3 transition-all {isTagsOpen && '-rotate-90'}" />
     </div>
     {/snippet}
-    <ul class="pl-3 pr-2">
+    <div class="pl-3 pr-2">
+
+    <ul>
       <div class="h-1"></div>
       {#each tags as t}
       <TagItem tag={t}></TagItem>
       {/each}
+    </ul>
     <div class="flex items-center justify-center rounded-lg border-[1px] hover:border-gray-400 bg-gray-200"
     on:click={openAddTagDialog} >
       <Fa icon={faPlus} size="xs" primaryOpacity={.4}/>
       <span class="ml-1 py-1 select-none text-zinc-600 text-sm font-semibold">Add tag</span>
     </div>
+    </div>
+  </Collapsible>
     <Dialog bind:isOpen={isAddTagDialogOpen}>
       <div class="w-64">
         <div class="p-1 mb-2">Tag name: </div>
@@ -78,6 +83,4 @@
         on:click={()=>isAddTagDialogOpen = false}>Cancel</button>
       </div>
     </Dialog>
-    </ul>
-  </Collapsible>
 </div>

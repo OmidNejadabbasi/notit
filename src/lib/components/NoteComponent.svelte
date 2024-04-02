@@ -18,7 +18,6 @@
     FormSubmissionSucceed,
     FormSubmitted,
   } from "../state/FormState";
-  import { cssVariables } from "../utils/svelte-utils";
   import {
     createEditor,
     type EditorStore,
@@ -30,16 +29,21 @@
   let formState: FormState = $state(new FormNewMode());
 
   let noteService: NoteService = sl.resolve(tNoteService);
-  let { note = Note.newNote("", "") } = $props<{ note: Note }>();
-  let content:any[] = $state(JSON.parse(note.content || "[]"));
+  let { note = Note.newNote("", "") }: { note: Note } = $props();
+  let content: any[] = $state(JSON.parse(note.content || "[]"));
   let editor = createEditor({
     placeholder: "Empty Note",
     data: { blocks: content },
   });
   let title = $state(note.title);
-  let preview = $derived(content.slice(0,3).map((e)=>{
-    return e.data.text || e.data.code
-  }).join('\n'))
+  let preview = $derived(
+    content
+      .slice(0, 3)
+      .map((e) => {
+        return e.data.text || e.data.code;
+      })
+      .join("\n")
+  );
   let hasTitle = $derived(title?.length);
   let isFocused = $state(false);
 
@@ -95,7 +99,8 @@
     <h3 class="input">{title}</h3>
   {/if}
   <div class="overflow-ellipsis text-wrap">
-    {@html preview?.substring(0, 300) + (preview?.length || 0 >= 300 ? "..." : "")}
+    {@html preview?.substring(0, 300) +
+      (preview?.length || 0 >= 300 ? "..." : "")}
   </div>
   {#if preview?.trim().length === 0}
     <h3 class="text-gray-400">Empty Note</h3>
