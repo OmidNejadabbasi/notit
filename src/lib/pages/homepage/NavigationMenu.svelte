@@ -1,13 +1,11 @@
 <script lang="ts">
-  import { faCalendarDay, faChevronCircleDown, faChevronDown, faPlus, faTags } from "@fortawesome/free-solid-svg-icons";
+  import { faCalendarDay, faChevronDown, faPlus, faTags } from "@fortawesome/free-solid-svg-icons";
 
   import Fa from "svelte-fa";
   import ListItem from "../../components/ListItem.svelte";
-  import Space from "../../components/shared/Space.svelte";
-  import Collapsible from "../../components/shared/Collapsible.svelte";
+  import {Space ,Collapsible, Dialog} from "ui-commons";
   import { Tag } from "../../data/Tag";
   import TagItem from "../../components/TagItem.svelte";
-  import Dialog from "../../components/shared/Dialog.svelte";
   import { tNoteService, type NoteService } from "../../services/note/NoteService";
   import { sl } from "../../di";
 
@@ -60,7 +58,7 @@
     <ul>
       <div class="h-1"></div>
       {#each tags as t}
-      <TagItem tag={t}></TagItem>
+      <TagItem tag={t} href=""></TagItem>
       {/each}
     </ul>
     <div class="flex items-center justify-center rounded-lg border-[1px] hover:border-gray-400 bg-gray-200"

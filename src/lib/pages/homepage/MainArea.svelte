@@ -2,7 +2,7 @@
   import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
   import Fa from "svelte-fa";
-  import Button from "../../components/shared/Button.svelte";
+  import { Button } from "ui-commons";
   import NoteComponent from "../../components/NoteComponent.svelte";
   import { Color, CssColors } from "../../data/Color";
   import { onMount } from "svelte";
@@ -23,17 +23,6 @@
   });
 
   notes = notes.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-  let notesDailyListed = new Map<Date, Note[]>();
-  let dayCount = 0;
-  let date = new Date();
-  for (let i = 0; i < notes.length; i++) {
-    if (daysSinceEpoch(notes[i].createdAt) === daysSinceEpoch(date)) {
-      notesDailyListed.set(date).push(notes[i]);
-    } else {
-      dayCount++;
-      notesDailyListed.push([]);
-    }
-  }
 
   function addNote() {
     notes = [Note.newNote("", ""), ...notes];

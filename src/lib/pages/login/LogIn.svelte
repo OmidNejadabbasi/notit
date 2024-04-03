@@ -4,9 +4,8 @@
   import github from "../../../assets/img/github.svg";
   import google from "../../../assets/img/google.svg";
 
-  import Button from "../../components/shared/Button.svelte";
+  import { Button, TextField, Dialog, Space, Collapsible  } from "ui-commons";
 
-  import TextField from "../../components/shared/TextField.svelte";
   import { ColorPalette } from "../../utils/ColorPalete";
   import { AuthService, tAuthService } from "../../services/AuthService";
   import { navigate } from "svelte-navigator";
@@ -35,7 +34,7 @@
 </script>
 
 <div
-  class="flex items-center justify-center h-full md:gap-12 lg:gap-24 p-6 bg-diag-pattern bg-400p bg-repeat bg-opacity-10 "
+  class="flex items-center justify-center h-full md:gap-12 lg:gap-24 p-6 bg-diag-pattern bg-400p bg-repeat bg-opacity-10"
 >
   <form action="" class="w-96 flex flex-col gap-3 bg-white rounded p-9">
     <Button

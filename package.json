@@ -8,10 +8,12 @@
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
+  "workspaces":["ui-commons"],
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "3.0.2",
     "@tsconfig/svelte": "^5.0.4",
     "autoprefixer": "^10.4.18",
+    "ui-commons": "^0.0.1",
     "postcss": "^8.4.35",
     "sass": "^1.71.1",
     "svelte": "^5.0.0-next.72",

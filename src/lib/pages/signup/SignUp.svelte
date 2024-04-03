@@ -1,9 +1,7 @@
 <script>
   import { CssColors } from "../../data/Color";
 
-  import Button from "../../components/shared/Button.svelte";
-
-  import TextField from "../../components/shared/TextField.svelte";
+  import { Button, TextField, Dialog, Space, Collapsible  } from "ui-commons";
   import { ColorPalette } from "../../utils/ColorPalete";
   import { AuthService, tAuthService } from "../../services/AuthService";
   import { navigate } from "svelte-navigator";

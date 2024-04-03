@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from "../../components/shared/Button.svelte";
+  import { Button } from "ui-commons";
   import { faHouse, faUser } from "@fortawesome/free-solid-svg-icons";
   import Fa from "svelte-fa";
   import NavigationMenu from "./NavigationMenu.svelte";
